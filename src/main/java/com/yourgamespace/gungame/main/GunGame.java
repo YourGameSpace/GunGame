@@ -2,6 +2,8 @@ package com.yourgamespace.gungame.main;
 
 import com.yourgamespace.gungame.data.Data;
 import com.yourgamespace.gungame.files.PluginConfig;
+import com.yourgamespace.gungame.listener.CancelEvents;
+import com.yourgamespace.gungame.listener.WaterKill;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
 import de.tubeof.tubetils.api.cache.CacheContainer;
 import de.tubeof.tubetils.api.updatechecker.UpdateChecker;
@@ -97,7 +99,9 @@ public class GunGame extends JavaPlugin {
     private void registerListener() {
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aListeners will be registered ...");
 
-        //Listener
+        pluginManager.registerEvents(new CancelEvents(), this);
+
+        pluginManager.registerEvents(new WaterKill(), this);
 
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aListeners have been successfully registered!");
     }
