@@ -46,6 +46,7 @@ public class PluginConfig {
         cfg.addDefault("Messages.Error.NoPerms", "§cNo permissions!");
 
         //Settings
+        cfg.addDefault("Settings.General.ServerMode.BungeeCord", true);
         cfg.addDefault("Settings.Updates.UseUpdateChecker", true);
         cfg.addDefault("Settings.Updates.ConsoleNotify", true);
         cfg.addDefault("Settings.Updates.IngameNotify", true);
@@ -71,6 +72,7 @@ public class PluginConfig {
         cacheContainer.add(String.class, "ERROR_NO_PERMISSIONS", cfg.getString("Messages.Error.NoPerms"));
 
         //Settings
+        cacheContainer.add(Boolean.class, "SERVERMODE_BUNGEECORD", cfg.getBoolean("Settings.General.ServerMode.BungeeCord"));
         cacheContainer.add(Boolean.class, "USE_UPDATE_CHECKER", cfg.getBoolean("Settings.Updates.UseUpdateChecker"));
         cacheContainer.add(Boolean.class, "UPDATE_NOTIFY_CONSOLE", cfg.getBoolean("Settings.Updates.ConsoleNotify"));
         cacheContainer.add(Boolean.class, "UPDATE_NOTIFY_INGAME", cfg.getBoolean("Settings.Updates.IngameNotify"));
