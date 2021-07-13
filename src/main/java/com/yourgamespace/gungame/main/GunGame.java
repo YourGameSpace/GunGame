@@ -86,7 +86,7 @@ public class GunGame extends JavaPlugin {
 
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aChecking for updates ...");
         try {
-            updateChecker = new UpdateChecker(51321, this, ApiMethode.YOURGAMESPACE, false, true);
+            updateChecker = new UpdateChecker(0, this, ApiMethode.YOURGAMESPACE, false, true);
             if(updateChecker.isOutdated()) {
                 if(ObjectTransformer.getBoolean(cacheContainer.get(Boolean.class, "UPDATE_NOTIFY_CONSOLE"))) ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cAn update was found! (v" + updateChecker.getLatestVersion() + ") Download here: " + updateChecker.getDownloadUrl());
             }
