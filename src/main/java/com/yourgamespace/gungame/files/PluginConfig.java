@@ -73,6 +73,8 @@ public class PluginConfig {
 
         //Settings
         cacheContainer.add(Boolean.class, "SERVERMODE_BUNGEECORD", cfg.getBoolean("Settings.General.ServerMode.BungeeCord"));
+        data.setBungeeCord(cfg.getBoolean("Settings.General.ServerMode.BungeeCord"));
+
         cacheContainer.add(Boolean.class, "USE_UPDATE_CHECKER", cfg.getBoolean("Settings.Updates.UseUpdateChecker"));
         cacheContainer.add(Boolean.class, "UPDATE_NOTIFY_CONSOLE", cfg.getBoolean("Settings.Updates.ConsoleNotify"));
         cacheContainer.add(Boolean.class, "UPDATE_NOTIFY_INGAME", cfg.getBoolean("Settings.Updates.IngameNotify"));
