@@ -15,6 +15,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
+import java.util.Properties;
 
 @SuppressWarnings("ALL")
 public class GunGame extends JavaPlugin {
@@ -32,6 +33,7 @@ public class GunGame extends JavaPlugin {
     @Override
     public void onEnable() {
         initialisation();
+        selfTests();
 
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aThe Plugin will be activated ...");
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "==================================================");
@@ -52,6 +54,29 @@ public class GunGame extends JavaPlugin {
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aThe Plugin will be deactivated ...");
 
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aThe plugin was successfully deactivated!");
+    }
+
+    private void selfTests() {
+        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aRunning Self-Tests ...");
+
+        Properties properties = new Properties();
+        try {
+            properties.load(getClassLoader().getResourceAsStream("project.properties"));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
+        String projectVersion = properties.getProperty("version");
+        Integer projectJavaVersion = Integer.parseInt(properties.getProperty("javaVersion"));
+
+        //Java Test
+        if(!(Integer.parseInt(System.getProperty("java.version")) >= projectJavaVersion)) {
+            ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cJava-Version does not match required Java-Version! Stopping plugin ...");
+            pluginManager.disablePlugin(getInstance());
+            return;
+        }
+
+        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aSelf-Tests done!");
     }
 
     private void initialisation() {
