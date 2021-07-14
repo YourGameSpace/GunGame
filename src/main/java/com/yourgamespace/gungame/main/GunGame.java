@@ -59,6 +59,7 @@ public class GunGame extends JavaPlugin {
     private void selfTests() {
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aRunning Self-Tests ...");
 
+        //Load Project Properties
         Properties properties = new Properties();
         try {
             properties.load(getClassLoader().getResourceAsStream("project.properties"));
@@ -66,18 +67,30 @@ public class GunGame extends JavaPlugin {
             exception.printStackTrace();
         }
 
+        //Propertys Getter
         String projectVersion = properties.getProperty("version");
         Integer projectJavaVersion = Integer.parseInt(properties.getProperty("javaVersion"));
 
-        //Java Test
+        //START: Java Test
         String javaVersion = System.getProperty("java.version");
-
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§eDetected Java-Version: " + javaVersion);
+
+        //Format Java Version String
+        if(javaVersion.startsWith("1.")) {
+            javaVersion = javaVersion.substring(2, 3);
+        } else {
+            int dot = javaVersion.indexOf(".");
+            if(dot != -1) {
+                javaVersion = javaVersion.substring(0, dot);
+            }
+        }
+        // Final Java Check
         if(!(Integer.parseInt(javaVersion) >= projectJavaVersion)) {
             ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cJava-Version does not match required Java-Version! Stopping plugin ...");
             pluginManager.disablePlugin(getInstance());
             return;
         }
+        //END: Java Test
 
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aSelf-Tests done!");
     }
