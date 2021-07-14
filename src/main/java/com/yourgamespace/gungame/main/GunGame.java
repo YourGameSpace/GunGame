@@ -41,7 +41,7 @@ public class GunGame extends JavaPlugin {
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "==================================================");
 
         manageConfigs();
-        checkUpdate();
+        //checkUpdate();
 
         registerListener();
         registerCommands();
