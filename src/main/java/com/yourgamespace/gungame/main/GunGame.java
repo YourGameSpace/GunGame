@@ -70,7 +70,10 @@ public class GunGame extends JavaPlugin {
         Integer projectJavaVersion = Integer.parseInt(properties.getProperty("javaVersion"));
 
         //Java Test
-        if(!(Integer.parseInt(System.getProperty("java.version")) >= projectJavaVersion)) {
+        String javaVersion = System.getProperty("java.version");
+
+        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§eDetected Java-Version: " + javaVersion);
+        if(!(Integer.parseInt(javaVersion) >= projectJavaVersion)) {
             ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cJava-Version does not match required Java-Version! Stopping plugin ...");
             pluginManager.disablePlugin(getInstance());
             return;
