@@ -27,6 +27,6 @@ public class PlayerDeath implements Listener {
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
         //For 1.13+
-        Bukkit.getScheduler().scheduleSyncDelayedTask(GunGame.getInstance(), () -> player.spigot().respawn(), 5);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(GunGame.getInstance(), () -> player.spigot().respawn(), 5);
     }
 }
