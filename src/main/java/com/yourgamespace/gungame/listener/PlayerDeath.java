@@ -1,7 +1,6 @@
 package com.yourgamespace.gungame.listener;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.PacketContainer;
+import com.yourgamespace.gungame.data.Data;
 import com.yourgamespace.gungame.main.GunGame;
 import com.yourgamespace.gungame.utils.PacketHandler;
 import org.bukkit.Bukkit;
@@ -11,12 +10,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.util.Vector;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
 @SuppressWarnings("ALL")
 public class PlayerDeath implements Listener {
 
+    private final Data data = GunGame.getData();
     private final PacketHandler packetHandler = new PacketHandler();
 
     @EventHandler
@@ -35,12 +34,11 @@ public class PlayerDeath implements Listener {
         player.getInventory().setArmorContents(null);
 
         //For 1.13+
-        if(Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
+        if(data.isProtocollibInstalled()) {
             Bukkit.getScheduler().runTaskLater(GunGame.getInstance(), () -> {
-                PacketContainer respawnPacket = new PacketContainer(PacketType.Play.Server.RESPAWN);
                 try {
-                    GunGame.getProtocolManager().sendServerPacket(player, respawnPacket);
-                } catch (InvocationTargetException e) {
+                    packetHandler.sendRespawnPlayerPacket(player);
+                } catch (ReflectiveOperationException e) {
                     e.printStackTrace();
                 }
             }, 5);
