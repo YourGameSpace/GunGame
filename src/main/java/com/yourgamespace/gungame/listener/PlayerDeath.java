@@ -24,5 +24,7 @@ public class PlayerDeath implements Listener {
         player.teleport(Objects.requireNonNull(player.getLocation().getWorld()).getSpawnLocation());
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
+        //For 1.13+
+        player.spigot().respawn();
     }
 }
