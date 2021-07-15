@@ -17,6 +17,8 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.Objects;
+
 public class CancelEvents implements Listener {
 
     @EventHandler
@@ -96,7 +98,7 @@ public class CancelEvents implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         if (event.hasBlock()) {
             Block block = event.getClickedBlock();
-            if(block.getType().isInteractable()) event.setCancelled(true);
+            if(Objects.requireNonNull(block).getType().isInteractable()) event.setCancelled(true);
         }
     }
 }
