@@ -4,11 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 @SuppressWarnings("ALL")
-public class PacketSender {
+public class PacketHandler {
 
-    public PacketSender() {}
+    public PacketHandler() {}
 
-    private Class<?> getNMS(String name) {
+    public Class<?> getNMS(String name) {
         String version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         try {
             return Class.forName("net.minecraft.server." + version + "." + name);
@@ -18,7 +18,7 @@ public class PacketSender {
         }
     }
 
-    private void sendPacket(Player player, Object packet) {
+    public void sendPacket(Player player, Object packet) {
         try {
             Object handle = player.getClass().getMethod("getHandle", new Class[0]).invoke(player, new Object[0]);
             Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
