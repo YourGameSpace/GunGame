@@ -54,9 +54,9 @@ public class PacketHandler {
                         "Try to download an update of ProtocolLib.", noSuchMethodError);
             }
         }
-        respawn.getDifficulties().write(0, difficulty);
-        respawn.getGameModes().write(0, EnumWrappers.NativeGameMode.fromBukkit(player.getGameMode()));
-        respawn.getWorldTypeModifier().write(0, player.getWorld().getWorldType());
+        respawn.getDifficulties().writeSafely(0, difficulty);
+        respawn.getGameModes().writeSafely(0, EnumWrappers.NativeGameMode.fromBukkit(player.getGameMode()));
+        respawn.getWorldTypeModifier().writeSafely(0, player.getWorld().getWorldType());
         protocolManager.sendServerPacket(player, respawn);
     }
 }
