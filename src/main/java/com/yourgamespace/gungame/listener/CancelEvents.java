@@ -98,8 +98,6 @@ public class CancelEvents implements Listener {
         if (event.hasBlock()) {
             Block block = event.getClickedBlock();
             if(block.getType().isInteractable()) event.setCancelled(true);
-            }
         }
     }
-
 }
