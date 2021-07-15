@@ -1,5 +1,7 @@
 package com.yourgamespace.gungame.listener;
 
+import com.yourgamespace.gungame.main.GunGame;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,6 +27,6 @@ public class PlayerDeath implements Listener {
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
         //For 1.13+
-        player.spigot().respawn();
+        Bukkit.getScheduler().scheduleSyncDelayedTask(GunGame.getInstance(), () -> player.spigot().respawn(), 1L);
     }
 }
