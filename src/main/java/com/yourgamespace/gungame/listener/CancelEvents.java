@@ -1,7 +1,6 @@
 package com.yourgamespace.gungame.listener;
 
 import com.cryptomorin.xseries.XMaterial;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -98,11 +97,17 @@ public class CancelEvents implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
+        if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+
         if (event.hasBlock()) {
             Block block = event.getClickedBlock();
-            XMaterial material = XMaterial.matchXMaterial(block.getType());
+            XMaterial material = XMaterial.matchXMaterial(Objects.requireNonNull(block).getType());
 
-            if(material.parseMaterial().isInteractable()) event.setCancelled(true);
+            try {
+                if(Objects.requireNonNull(material.parseMaterial()).isInteractable()) event.setCancelled(true);
+            } catch (NoSuchMethodError exception) {
+                event.setCancelled(true);
+            }
         }
     }
 }
