@@ -1,5 +1,6 @@
 package com.yourgamespace.gungame.main;
 
+import com.yourgamespace.gungame.commands.GunGameCMD;
 import com.yourgamespace.gungame.data.Data;
 import com.yourgamespace.gungame.files.PluginConfig;
 import com.yourgamespace.gungame.listener.CancelEvents;
@@ -150,7 +151,7 @@ public class GunGame extends JavaPlugin {
     private void registerCommands() {
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aCommands will be registered ...");
 
-        //Commands
+        getCommand("gungame").setExecutor(new GunGameCMD());
 
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aCommands have been successfully registered!");
     }

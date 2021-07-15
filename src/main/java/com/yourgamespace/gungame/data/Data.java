@@ -1,5 +1,6 @@
 package com.yourgamespace.gungame.data;
 
+@SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class Data {
 
     public Data() {}

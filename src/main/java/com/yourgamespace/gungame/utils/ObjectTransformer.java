@@ -1,5 +1,6 @@
 package com.yourgamespace.gungame.utils;
 
+@SuppressWarnings("unused")
 public class ObjectTransformer {
 
     public static String getString(Object object) {
