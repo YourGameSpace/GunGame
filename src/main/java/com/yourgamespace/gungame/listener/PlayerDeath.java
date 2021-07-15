@@ -37,7 +37,8 @@ public class PlayerDeath implements Listener {
         if(data.isProtocollibInstalled()) {
             Bukkit.getScheduler().runTaskLater(GunGame.getInstance(), () -> {
                 try {
-                    packetHandler.sendRespawnPlayerPacket(player);
+                    packetHandler.sendPlayerRespawnPacket(player);
+                    packetHandler.sendPlayerTeleportPacket(player);
                 } catch (ReflectiveOperationException e) {
                     e.printStackTrace();
                 }

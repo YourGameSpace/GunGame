@@ -6,8 +6,12 @@ import com.comphenix.protocol.utility.MinecraftVersion;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import com.yourgamespace.gungame.main.GunGame;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.InvocationTargetException;
+
+import static com.comphenix.protocol.PacketType.Play.Server.POSITION;
 import static com.comphenix.protocol.PacketType.Play.Server.RESPAWN;
 
 @SuppressWarnings("ALL")
@@ -37,7 +41,7 @@ public class PacketHandler {
         }
     }
 
-    public void sendRespawnPlayerPacket(Player player) throws ReflectiveOperationException {
+    public void sendPlayerRespawnPacket(Player player) throws ReflectiveOperationException {
         PacketContainer respawn = new PacketContainer(RESPAWN);
         EnumWrappers.Difficulty difficulty = EnumWrappers.getDifficultyConverter().getSpecific(player.getWorld().getDifficulty());
         //<= 1.13.1
@@ -58,5 +62,21 @@ public class PacketHandler {
         respawn.getGameModes().writeSafely(0, EnumWrappers.NativeGameMode.fromBukkit(player.getGameMode()));
         respawn.getWorldTypeModifier().writeSafely(0, player.getWorld().getWorldType());
         protocolManager.sendServerPacket(player, respawn);
+    }
+
+    public void sendPlayerTeleportPacket(Player player) throws InvocationTargetException {
+        PacketContainer teleport = new PacketContainer(POSITION);
+        teleport.getModifier().writeDefaults();
+
+        Location location = player.getLocation();
+        teleport.getDoubles().write(0, location.getX());
+        teleport.getDoubles().write(1, location.getY());
+        teleport.getDoubles().write(2, location.getZ());
+        teleport.getFloat().write(0, location.getYaw());
+        teleport.getFloat().write(1, location.getPitch());
+
+        //Sends invalid teleport id, to let Bukkit ignore the incoming client confirm packet
+        teleport.getIntegers().writeSafely(0, -1337);
+        protocolManager.sendServerPacket(player, teleport);
     }
 }
