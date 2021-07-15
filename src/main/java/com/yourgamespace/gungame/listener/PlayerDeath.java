@@ -42,7 +42,7 @@ public class PlayerDeath implements Listener {
                 } catch (ReflectiveOperationException e) {
                     e.printStackTrace();
                 }
-            }, 5);
+            }, 1);
         }
     }
 }
