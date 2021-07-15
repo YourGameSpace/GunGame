@@ -1,5 +1,7 @@
 package com.yourgamespace.gungame.listener;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
 import com.yourgamespace.gungame.main.GunGame;
 import com.yourgamespace.gungame.utils.PacketHandler;
 import org.bukkit.Bukkit;
@@ -9,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.util.Vector;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
 
@@ -32,24 +33,17 @@ public class PlayerDeath implements Listener {
         player.teleport(Objects.requireNonNull(player.getLocation().getWorld()).getSpawnLocation());
         player.getInventory().clear();
         player.getInventory().setArmorContents(null);
-        //For 1.13+
-        Bukkit.getScheduler().runTaskLater(GunGame.getInstance(), () -> {
-            try {
-                Object enumDifficulty = packetHandler.getNMS("EnumDifficulty").getMethod("getById", int.class).invoke(null, 0);
-                Object worldType = packetHandler.getNMS("WorldType").getDeclaredField(player.getWorld().getWorldType().toString()).get(null);
-                Object enumGameMode = null;
-                try {
-                    enumGameMode = packetHandler.getNMS("EnumGamemode").getMethod("getById", int.class).invoke(null, player.getGameMode().ordinal());
-                } catch (Exception ex) {
-                    enumGameMode = packetHandler.getNMS("WorldSettings").getDeclaredClasses()[0].getMethod("valueOf", String.class).invoke(null, player.getGameMode().toString());
-                }
 
-                Constructor<?> respawnConstructor = packetHandler.getNMS("PacketPlayOutRespawn").getConstructor(int.class, enumDifficulty.getClass(), worldType.getClass(), enumGameMode.getClass());
-                Object respawnPacket = respawnConstructor.newInstance(0, enumDifficulty, worldType, enumGameMode);
-                packetHandler.sendPacket(player, respawnPacket);
-            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | NoSuchFieldException | InstantiationException e) {
-                e.printStackTrace();
-            }
-        }, 5);
+        //For 1.13+
+        if(Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
+            Bukkit.getScheduler().runTaskLater(GunGame.getInstance(), () -> {
+                PacketContainer respawnPacket = new PacketContainer(PacketType.Play.Server.RESPAWN);
+                try {
+                    GunGame.getProtocolManager().sendServerPacket(player, respawnPacket);
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }, 5);
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.yourgamespace.gungame.main;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import com.yourgamespace.gungame.commands.GunGameCMD;
 import com.yourgamespace.gungame.data.Data;
 import com.yourgamespace.gungame.files.PluginConfig;
@@ -27,6 +29,7 @@ public class GunGame extends JavaPlugin {
 
     private static GunGame main;
     private static TubeTilsManager tubeTilsManager;
+    private static ProtocolManager protocolManager;
     private static CacheContainer cacheContainer;
     private static UpdateChecker updateChecker;
     private static Data data;
@@ -107,6 +110,16 @@ public class GunGame extends JavaPlugin {
         cacheContainer.registerCacheType(Integer.class);
         cacheContainer.add(String.class, "STARTUP_PREFIX", "§7[§cGunGameLogger§7] ");
 
+        if(Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
+            ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aProtocolLib is installed! Support for ProtocolLib enabled!");
+            data.setProtocollib(true);
+
+            protocolManager = ProtocolLibrary.getProtocolManager();
+        } else {
+            data.setProtocollib(false);
+            ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cProtocolLib is NOT installed! Support for ProtocolLib disabled!");
+        }
+
         data = new Data();
         pluginConfig = new PluginConfig();
     }
@@ -159,6 +172,10 @@ public class GunGame extends JavaPlugin {
 
     private void bStats() {
 
+    }
+
+    public static ProtocolManager getProtocolManager() {
+        return protocolManager;
     }
 
     public static PluginConfig getPluginConfig() {

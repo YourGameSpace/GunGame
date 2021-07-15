@@ -5,6 +5,7 @@ api-version: 1.13
 main: com.yourgamespace.gungame.main.GunGame
 softdepend:
   - TubeTils
+  - ProtocolLib
 
 commands:
   gungame:

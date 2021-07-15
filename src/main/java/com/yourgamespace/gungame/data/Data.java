@@ -7,6 +7,7 @@ public class Data {
 
     private final Integer currentConfigVersion = 1;
     private boolean bungeeCord = true;
+    private boolean protocollib = true;
 
     public int getCurrentConfigVersion() {
         return currentConfigVersion;
@@ -18,5 +19,13 @@ public class Data {
 
     public void setBungeeCord(boolean bungeeCord) {
         this.bungeeCord = bungeeCord;
+    }
+
+    public boolean isProtocollibInstalled() {
+        return protocollib;
+    }
+
+    public void setProtocollib(boolean protocollib) {
+        this.protocollib = protocollib;
     }
 }
