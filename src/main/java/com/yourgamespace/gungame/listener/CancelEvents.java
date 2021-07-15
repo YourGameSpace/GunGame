@@ -98,7 +98,13 @@ public class CancelEvents implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         if (event.hasBlock()) {
             Block block = event.getClickedBlock();
-            if(Objects.requireNonNull(block).getType().isInteractable()) event.setCancelled(true);
+
+            try {
+                if(Objects.requireNonNull(block).getType().isInteractable()) event.setCancelled(true);
+            } catch (NoSuchMethodError exception) {
+                //Fallback
+
+            }
         }
     }
 }
