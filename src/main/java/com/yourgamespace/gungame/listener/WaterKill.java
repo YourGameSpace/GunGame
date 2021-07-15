@@ -1,6 +1,6 @@
 package com.yourgamespace.gungame.listener;
 
-import org.bukkit.Material;
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,6 +13,8 @@ public class WaterKill implements Listener {
     public void onWaterTouch(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         Block block = player.getLocation().getBlock();
-        if(block.getType().equals(Material.WATER)) player.damage(40F);
+        XMaterial material = XMaterial.matchXMaterial(block.getType());
+
+        if(material == XMaterial.WATER) player.damage(40F);
     }
 }
