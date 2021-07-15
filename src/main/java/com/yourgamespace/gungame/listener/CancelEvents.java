@@ -1,5 +1,6 @@
 package com.yourgamespace.gungame.listener;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -96,93 +97,8 @@ public class CancelEvents implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         if (event.hasBlock()) {
             Block block = event.getClickedBlock();
-
-
-            // LAGACY OUTDATED
-            //if (b.getType() == Material.CHEST) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.CRAFTING_TABLE) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.ACACIA_DOOR) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.BIRCH_DOOR) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.DARK_OAK_DOOR) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.JUNGLE_DOOR) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.SPRUCE_DOOR) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.TRAPDOOR) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.DOOR) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.ACACIA_FENCE_GATE) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.BIRCH_FENCE_GATE) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.DARK_OAK_FENCE_GATE) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.FENCE_GATE) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.JUNGLE_FENCE_GATE) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.SPRUCE_FENCE_GATE) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.BEACON) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.ANVIL) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.HOPPER) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.BREWING_STAND) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.FURNACE) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.DAYLIGHT_DETECTOR) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.DROPPER) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.WOOD_BUTTON) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.STONE_BUTTON) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.TRAPPED_CHEST) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.LEVER) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.DRAGON_EGG) {
-            //    e.setCancelled(true);
-            //}
-            //if (b.getType() == Material.NOTE_BLOCK) {
-            //    e.setCancelled(true);
-            //}
+            if(block.getType().isInteractable()) event.setCancelled(true);
+            }
         }
     }
 
