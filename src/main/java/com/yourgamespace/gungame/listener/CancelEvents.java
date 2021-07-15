@@ -1,6 +1,5 @@
 package com.yourgamespace.gungame.listener;
 
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
