@@ -110,6 +110,10 @@ public class GunGame extends JavaPlugin {
         cacheContainer.registerCacheType(Integer.class);
         cacheContainer.add(String.class, "STARTUP_PREFIX", "§7[§cGunGameLogger§7] ");
 
+        data = new Data();
+        pluginConfig = new PluginConfig();
+
+        //ProtocolLib
         if(Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
             ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aProtocolLib is installed! Support for ProtocolLib enabled!");
             data.setProtocollib(true);
@@ -119,9 +123,6 @@ public class GunGame extends JavaPlugin {
             data.setProtocollib(false);
             ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cProtocolLib is NOT installed! Support for ProtocolLib disabled!");
         }
-
-        data = new Data();
-        pluginConfig = new PluginConfig();
     }
 
     private void manageConfigs() {
