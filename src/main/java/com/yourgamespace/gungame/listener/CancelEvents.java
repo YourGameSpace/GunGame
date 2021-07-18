@@ -9,6 +9,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
@@ -21,6 +22,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import java.util.Objects;
 
 public class CancelEvents implements Listener {
+
+    @EventHandler
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+        if(event.getSpawnReason() != CreatureSpawnEvent.SpawnReason.CUSTOM) event.setCancelled(true);
+    }
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
