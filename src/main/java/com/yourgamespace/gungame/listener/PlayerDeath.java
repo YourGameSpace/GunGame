@@ -13,7 +13,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.util.Vector;
 
-@SuppressWarnings("ALL")
 public class PlayerDeath implements Listener {
 
     private final Data data = GunGame.getData();
