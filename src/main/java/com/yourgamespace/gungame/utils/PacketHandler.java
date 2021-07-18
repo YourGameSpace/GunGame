@@ -52,10 +52,7 @@ public class PacketHandler {
             try {
                 respawn.getDimensions().writeSafely(0, dimensionId);
             } catch (NoSuchMethodError noSuchMethodError) {
-                throw new ReflectiveOperationException("Unable to find dimension setter. " +
-                        "Your ProtocolLib version is incompatible with this plugin version in combination with " +
-                        "Minecraft 1.13.1. " +
-                        "Try to download an update of ProtocolLib.", noSuchMethodError);
+                throw new ReflectiveOperationException();
             }
         }
         respawn.getDifficulties().writeSafely(0, difficulty);
