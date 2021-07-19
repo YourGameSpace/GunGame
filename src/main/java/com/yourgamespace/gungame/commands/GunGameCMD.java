@@ -52,7 +52,7 @@ public class GunGameCMD implements CommandExecutor {
             }
 
             //Load World
-            player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aLoading world with name §e" + worldName + " $a... ");
+            player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aLoading world with name §e" + worldName + " §a... ");
             Bukkit.getServer().createWorld(new WorldCreator(worldName));
             player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aWorld successfully loaded!");
 
