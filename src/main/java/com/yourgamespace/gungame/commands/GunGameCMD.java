@@ -77,7 +77,7 @@ public class GunGameCMD implements CommandExecutor {
                 return true;
             }
 
-            int step = Objects.requireNonNull(mapCreator).getCurrentStep();
+            int step = mapCreator.getCurrentStep();
 
             //STEP: Set Map Name
             if(step == 1) {
