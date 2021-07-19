@@ -47,7 +47,7 @@ public class GunGameCMD implements CommandExecutor {
 
             //CHECK: Does world exists
             if(Files.notExists(Paths.get(worldName), LinkOption.NOFOLLOW_LINKS)) {
-                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cNo world with name §e" + worldName + "§cfound!");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cNo world with name §e" + worldName + " §cfound!");
                 return true;
             }
 
