@@ -31,7 +31,10 @@ public class GunGameCMD implements CommandExecutor {
             return true;
         }
         Player player = (Player) commandSender;
-        if(args.length == 0) sendUsageMessage(player);
+        if(args.length == 0) {
+            sendUsageMessage(player);
+            return true;
+        }
         String subCommand = args[0];
 
         if(subCommand.equalsIgnoreCase("loadWorld")) {
