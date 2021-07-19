@@ -50,6 +50,13 @@ public class GunGameCMD implements CommandExecutor {
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cNo world with name §e" + worldName + " §cfound!");
                 return true;
             }
+            //CHECK: Is world already loded
+            if(Bukkit.getWorld(worldName) != null) {
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aWorld already loaded! Teleporting ...");
+
+                player.teleport(Objects.requireNonNull(Bukkit.getWorld(worldName)).getSpawnLocation());
+                return true;
+            }
 
             //Load World
             player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aLoading world with name §e" + worldName + " §a... ");
