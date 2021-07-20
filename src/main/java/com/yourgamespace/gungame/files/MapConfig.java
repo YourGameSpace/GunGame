@@ -49,6 +49,8 @@ public class MapConfig {
         cfg.set("Spawn.yaw", spawnLocation.getYaw());
         cfg.set("Spawn.pitch", spawnLocation.getPitch());
 
+        saveCfg();
+
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMap-Config successfully created!");
     }
 
