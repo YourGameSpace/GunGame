@@ -62,12 +62,12 @@ public class Data {
         mapCreators.remove(player.getUniqueId());
     }
 
-    public boolean isPlayerInMapCreation(Player player) {
-        return mapCreators.containsKey(player.getUniqueId());
+    public MapCreator getMapCreator(Player player) {
+        return mapCreators.getOrDefault(player.getUniqueId(), new MapCreator(player));
     }
 
-    public MapCreator getMapCreator(Player player) {
-        return mapCreators.get(player.getUniqueId());
+    public boolean isPlayerInMapCreation(Player player) {
+        return mapCreators.containsKey(player.getUniqueId());
     }
     //EMD: MapCreator
 

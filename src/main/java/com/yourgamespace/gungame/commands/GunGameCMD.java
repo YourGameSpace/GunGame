@@ -68,13 +68,7 @@ public class GunGameCMD implements CommandExecutor {
         }
 
         if(subCommand.equalsIgnoreCase("createMap")) {
-            MapCreator mapCreator;
-            if(!data.isPlayerInMapCreation(player)) {
-                mapCreator = new MapCreator(player);
-            } else {
-                mapCreator = data.getMapCreator(player);
-            }
-
+            MapCreator mapCreator = data.getMapCreator(player);
             int step = mapCreator.getCurrentStep();
 
             //STEP: Set Map Name
