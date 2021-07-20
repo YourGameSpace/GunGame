@@ -1,6 +1,7 @@
 package com.yourgamespace.gungame.commands;
 
 import com.yourgamespace.gungame.data.Data;
+import com.yourgamespace.gungame.data.MapCreatorData;
 import com.yourgamespace.gungame.main.GunGame;
 import com.yourgamespace.gungame.utils.MapCreator;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
@@ -15,7 +16,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 @SuppressWarnings({"NullableProblems", "unused"})
@@ -68,9 +72,11 @@ public class GunGameCMD implements CommandExecutor {
         }
 
         if(subCommand.equalsIgnoreCase("createMap")) {
-            MapCreator mapCreator = data.getMapCreator(player);
-            int step = mapCreator.getCurrentStep();
+            MapCreator mapCreator;
+            if(MapCreatorData.isPlayerInMapCreation(player)) mapCreator = MapCreatorData.getMapCreator(player);
+            else mapCreator = new MapCreator(player); MapCreatorData.addMapCreator(player, mapCreator);
 
+            int step = mapCreator.getCurrentStep();
             //STEP: Set Map Name
             if(step == 1) {
                 if(args.length != 2) {
@@ -154,7 +160,7 @@ public class GunGameCMD implements CommandExecutor {
                     exception.printStackTrace();
                 }
 
-                data.removeMapCreator(player);
+                MapCreatorData.removeMapCreator(player);
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aMap creation successfully completed! You can now create arenas and assign this map to it with the following command:");
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§e/gungame createArena");
                 return true;
