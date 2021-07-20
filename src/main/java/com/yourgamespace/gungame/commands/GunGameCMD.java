@@ -2,6 +2,7 @@ package com.yourgamespace.gungame.commands;
 
 import com.yourgamespace.gungame.data.Data;
 import com.yourgamespace.gungame.data.MapCreatorData;
+import com.yourgamespace.gungame.files.MapConfig;
 import com.yourgamespace.gungame.main.GunGame;
 import com.yourgamespace.gungame.utils.MapCreator;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
@@ -157,8 +158,13 @@ public class GunGameCMD implements CommandExecutor {
                     WorldUtils.copyFolder(path, Paths.get("plugins/GunGame/Maps/MapStorage/" + mapCreator.getMapName()), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException exception) {
                     player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cError while trying world to Map-Storage! Check the console for more details.");
+
                     exception.printStackTrace();
+                    return true;
                 }
+
+                MapConfig mapConfig = new MapConfig(mapCreator.getMapName());
+                mapConfig.createMapConfig(mapCreator.getSpawnProtectionRadius(), mapCreator.getSpawnLocation());
 
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aMap creation successfully completed! You can now create arenas and assign this map to it with the following command:");
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§e/gungame createArena");

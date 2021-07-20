@@ -4,6 +4,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.yourgamespace.gungame.commands.GunGameCMD;
 import com.yourgamespace.gungame.data.Data;
+import com.yourgamespace.gungame.files.MapConfig;
 import com.yourgamespace.gungame.files.PluginConfig;
 import com.yourgamespace.gungame.listener.CancelEvents;
 import com.yourgamespace.gungame.listener.MapCreatorCancelEvents;

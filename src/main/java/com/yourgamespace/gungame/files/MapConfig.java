@@ -36,6 +36,8 @@ public class MapConfig {
     }
 
     public void createMapConfig(int spawnProtectionRadius, Location spawnLocation) {
+        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aCreating new Map-Config for Map §e" + mapName + " §a...");
+
         //Default Map Params
         cfg.set("MapName", mapName);
         cfg.set("SpawnProtectionRadius", spawnProtectionRadius);
@@ -46,6 +48,8 @@ public class MapConfig {
         cfg.set("Spawn.z", spawnLocation.getZ());
         cfg.set("Spawn.yaw", spawnLocation.getYaw());
         cfg.set("Spawn.pitch", spawnLocation.getPitch());
+
+        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMap-Config successfully created!");
     }
 
 }
