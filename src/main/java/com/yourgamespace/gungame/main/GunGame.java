@@ -4,10 +4,9 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.yourgamespace.gungame.commands.GunGameCMD;
 import com.yourgamespace.gungame.data.Data;
-import com.yourgamespace.gungame.files.MapConfig;
 import com.yourgamespace.gungame.files.PluginConfig;
 import com.yourgamespace.gungame.listener.CancelEvents;
-import com.yourgamespace.gungame.listener.MapCreatorCancelEvents;
+import com.yourgamespace.gungame.listener.CreatorCancelEvents;
 import com.yourgamespace.gungame.listener.PlayerDeath;
 import com.yourgamespace.gungame.listener.WaterKill;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
@@ -158,7 +157,7 @@ public class GunGame extends JavaPlugin {
     private void registerListener() {
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aListeners will be registered ...");
 
-        pluginManager.registerEvents(new MapCreatorCancelEvents(), this);
+        pluginManager.registerEvents(new CreatorCancelEvents(), this);
         pluginManager.registerEvents(new CancelEvents(), this);
         pluginManager.registerEvents(new WaterKill(), this);
         pluginManager.registerEvents(new PlayerDeath(), this);
