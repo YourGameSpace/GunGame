@@ -92,8 +92,8 @@ public class GunGameCMD implements CommandExecutor {
                 player.sendMessage(String.valueOf(mapCreator.getCurrentStep()));
 
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aMapname was set to §e" + mapName + "§a!");
-                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §aSet the spawn protection radius where PVP is disabled. Use the command below:");
-                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §e/gungame createMap <Spawn-Protection-Radius>");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §7Set the spawn protection radius where PVP is disabled. Use the command below:");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §7/gungame createMap <Spawn-Protection-Radius>");
 
                 return true;
             }
@@ -118,8 +118,8 @@ public class GunGameCMD implements CommandExecutor {
                 player.sendMessage(String.valueOf(mapCreator.getCurrentStep()));
 
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aSpawn-Protection-Radius was set to §e" + spawnLocationRadius + "§a!");
-                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §aSet the spawn location for this map. Stand at the desired position and execute the following command:");
-                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §e/gungame createMap setSpawnLocation");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §7Set the spawn location for this map. Stand at the desired position and execute the following command:");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §7/gungame createMap setSpawnLocation");
                 return true;
             }
             //STEP: Set Spawn Location
@@ -134,8 +134,9 @@ public class GunGameCMD implements CommandExecutor {
                 player.sendMessage(String.valueOf(mapCreator.getCurrentStep()));
 
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aSpawn-Location set!");
-                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §aComplete the map setup. You will be kicked out of the world and the map config will be created! Use the command below:");
-                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §e/gungame createMap finish");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§eThe map has now been successfully set up! You can now make your own settings in the world, such as Gamerules or Worldborder. The settings will be adopted.");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §8Complete the map creation if you do not want to make any more changes. You will be kicked out of the world and the map config will be created! Use the command below:");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §7/gungame createMap finish");
                 return true;
             }
             //STEP: Finish
