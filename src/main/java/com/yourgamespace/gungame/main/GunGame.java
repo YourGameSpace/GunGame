@@ -63,6 +63,8 @@ public class GunGame extends JavaPlugin {
         loadArenas();
 
         bStats();
+
+        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aThe plugin was successfully activated!");
     }
 
     @Override
