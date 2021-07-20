@@ -11,7 +11,7 @@ public class Data {
 
     private final Integer currentConfigVersion = 1;
     private final String mapConfigPath = "plugins/GunGame/Maps/MapConfigs";
-    private final String mapStoragePath = "plugins/GunGame/Maps/MapConfigs";
+    private final String mapStoragePath = "plugins/GunGame/Maps/MapStorage";
     private final String arenaConfigPath = "plugins/GunGame/Arenas";
 
     private final HashMap<Integer, ArenaManager> arenas = new HashMap<>();
