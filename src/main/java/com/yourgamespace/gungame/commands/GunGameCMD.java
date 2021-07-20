@@ -87,6 +87,7 @@ public class GunGameCMD implements CommandExecutor {
                 String mapName = args[1];
                 mapCreator.setMapName(mapName);
                 mapCreator.addStep();
+                player.sendMessage(String.valueOf(mapCreator.getCurrentStep()));
 
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aMapname was set to §e" + mapName + "§a!");
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §aSet the spawn protection radius where PVP is disabled. Use the command below:");
@@ -112,6 +113,7 @@ public class GunGameCMD implements CommandExecutor {
 
                 mapCreator.setSpawnProtectionRadius(spawnLocationRadius);
                 mapCreator.addStep();
+                player.sendMessage(String.valueOf(mapCreator.getCurrentStep()));
 
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aSpawn-Protection-Radius was set to §e" + spawnLocationRadius + "§a!");
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §aSet the spawn location for this map. Stand at the desired position and execute the following command:");
@@ -127,6 +129,7 @@ public class GunGameCMD implements CommandExecutor {
 
                 mapCreator.setSpawnLocation(player.getLocation());
                 mapCreator.addStep();
+                player.sendMessage(String.valueOf(mapCreator.getCurrentStep()));
 
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aSpawn-Location set!");
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §aComplete the map setup. You will be kicked out of the world and the map config will be created! Use the command below:");
