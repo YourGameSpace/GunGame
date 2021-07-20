@@ -16,10 +16,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
 import java.util.Objects;
 
 @SuppressWarnings({"NullableProblems", "unused"})
@@ -146,20 +143,23 @@ public class GunGameCMD implements CommandExecutor {
                     player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§c/gungame createMap finish");
                     return true;
                 }
+                MapCreatorData.removeMapCreator(player);
 
                 World world = player.getWorld();
+                Path path = Paths.get(world.getWorldFolder().getPath());
+
                 for(Player worldPlayers : world.getPlayers()) {
                     worldPlayers.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
                 }
                 Bukkit.unloadWorld(world, true);
 
                 try {
-                    WorldUtils.copyFolder(Paths.get(mapCreator.getMapName()), Paths.get("plugins/GunGame/Maps/MapStorage/" + mapCreator.getMapName()), StandardCopyOption.REPLACE_EXISTING);
+                    WorldUtils.copyFolder(path, Paths.get("plugins/GunGame/Maps/MapStorage/" + mapCreator.getMapName()), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException exception) {
+                    player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cError while trying world to Map-Storage! Check the console for more details.");
                     exception.printStackTrace();
                 }
 
-                MapCreatorData.removeMapCreator(player);
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aMap creation successfully completed! You can now create arenas and assign this map to it with the following command:");
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§e/gungame createArena");
                 return true;
