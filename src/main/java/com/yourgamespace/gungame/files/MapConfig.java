@@ -18,14 +18,21 @@ public class MapConfig {
     private final Data data = GunGame.getData();
     private final CacheContainer cacheContainer = GunGame.getCacheContainer();
 
-    private String mapName;
+    private final String mapName;
 
     public MapConfig(String mapName) {
         this.mapName = mapName;
+
+        configInitialisation();
     }
 
-    private final File file = new File("plugins/GunGame/Maps/MapConfigs", mapName + ".yml");
-    private final FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
+    private File file;
+    private FileConfiguration cfg;
+
+    private void configInitialisation() {
+        file = new File("plugins/GunGame/Maps/MapConfigs", mapName + ".yml");
+        cfg = YamlConfiguration.loadConfiguration(file);
+    }
 
     private void saveCfg() {
         try {
