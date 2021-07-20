@@ -9,6 +9,7 @@ import com.yourgamespace.gungame.listener.CancelEvents;
 import com.yourgamespace.gungame.listener.CreatorCancelEvents;
 import com.yourgamespace.gungame.listener.PlayerDeath;
 import com.yourgamespace.gungame.listener.WaterKill;
+import com.yourgamespace.gungame.utils.FolderUtils;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
 import de.tubeof.tubetils.api.cache.CacheContainer;
 import de.tubeof.tubetils.api.updatechecker.UpdateChecker;
@@ -23,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -185,6 +187,16 @@ public class GunGame extends JavaPlugin {
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aLoading and caching maps ...");
 
         File mapConfigFolder = new File(data.getMapConfigPath());
+        try {
+            if(FolderUtils.isEmpty(Paths.get(mapConfigFolder.getPath()))) return;
+        } catch (IOException exception) {
+            ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aError while reading map configs!");
+
+            exception.printStackTrace();
+            pluginManager.disablePlugin(getInstance());
+            return;
+        }
+
         ArrayList<String> maps = new ArrayList<>();
 
         for (File fileEntry : mapConfigFolder.listFiles()) {
@@ -206,6 +218,16 @@ public class GunGame extends JavaPlugin {
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aLoading and caching arenas ...");
 
         File arenaConfigFolder = new File(data.getArenaConfigPath());
+        try {
+            if(FolderUtils.isEmpty(Paths.get(arenaConfigFolder.getPath()))) return;
+        } catch (IOException exception) {
+            ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aError while reading arena configs!");
+
+            exception.printStackTrace();
+            pluginManager.disablePlugin(getInstance());
+            return;
+        }
+
         ArrayList<String> arenas = new ArrayList<>();
 
         for (File fileEntry : arenaConfigFolder.listFiles()) {
