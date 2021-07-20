@@ -9,15 +9,34 @@ public class Data {
 
     public Data() {}
 
+    private final Integer currentConfigVersion = 1;
+    private final String mapConfigPath = "plugins/GunGame/Maps/MapConfigs";
+    private final String mapStoragePath = "plugins/GunGame/Maps/MapConfigs";
+    private final String arenaConfigPath = "plugins/GunGame/Arenas";
+
     private final HashMap<Integer, ArenaManager> arenas = new HashMap<>();
 
-    private final Integer currentConfigVersion = 1;
     private boolean bungeeCord = true;
     private boolean protocollib = true;
 
+    //START: Static Values
     public int getCurrentConfigVersion() {
         return currentConfigVersion;
     }
+
+    public String getMapConfigPath() {
+        return mapConfigPath;
+    }
+
+    public String getMapStoragePath() {
+        return mapStoragePath;
+    }
+
+    public String getArenaConfigPath() {
+        return arenaConfigPath;
+    }
+
+    //END: Static Values
 
     public boolean isServerModeBungeeCord() {
         return bungeeCord;

@@ -155,7 +155,7 @@ public class GunGameCMD implements CommandExecutor {
                 Bukkit.unloadWorld(world, true);
 
                 try {
-                    WorldUtils.copyFolder(path, Paths.get("plugins/GunGame/Maps/MapStorage/" + mapCreator.getMapName()), StandardCopyOption.REPLACE_EXISTING);
+                    WorldUtils.copyFolder(path, Paths.get(data.getMapStoragePath() + "/" + mapCreator.getMapName()), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException exception) {
                     player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cError while trying world to Map-Storage! Check the console for more details.");
 

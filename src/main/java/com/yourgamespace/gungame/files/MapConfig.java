@@ -30,7 +30,7 @@ public class MapConfig {
     private FileConfiguration cfg;
 
     private void configInitialisation() {
-        file = new File("plugins/GunGame/Maps/MapConfigs", mapName + ".yml");
+        file = new File(data.getMapConfigPath(), mapName + ".yml");
         cfg = YamlConfiguration.loadConfiguration(file);
     }
 

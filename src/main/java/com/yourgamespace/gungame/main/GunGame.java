@@ -16,10 +16,14 @@ import de.tubeof.tubetils.api.updatechecker.enums.ApiMethode;
 import de.tubeof.tubetilsmanager.TubeTilsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 @SuppressWarnings("ALL")
@@ -51,6 +55,9 @@ public class GunGame extends JavaPlugin {
 
         registerListener();
         registerCommands();
+
+        loadMaps();
+        loadArenas();
 
         bStats();
     }
@@ -109,6 +116,7 @@ public class GunGame extends JavaPlugin {
         cacheContainer.registerCacheType(String.class);
         cacheContainer.registerCacheType(Boolean.class);
         cacheContainer.registerCacheType(Integer.class);
+        cacheContainer.registerCacheType(ArrayList.class);
         cacheContainer.add(String.class, "STARTUP_PREFIX", "§7[§cGunGameLogger§7] ");
 
         data = new Data();
@@ -171,6 +179,41 @@ public class GunGame extends JavaPlugin {
         getCommand("gungame").setExecutor(new GunGameCMD());
 
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aCommands have been successfully registered!");
+    }
+
+    private void loadMaps() {
+        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aLoading and caching maps ...");
+
+        File mapConfigFolder = new File(data.getMapConfigPath());
+        ArrayList<String> maps = new ArrayList<>();
+
+        for (File fileEntry : mapConfigFolder.listFiles()) {
+            if(!fileEntry.isFile()) continue;
+
+            FileConfiguration cfg = YamlConfiguration.loadConfiguration(fileEntry);
+            String mapName = cfg.getString("MapName");
+
+            maps.add(mapName);
+            ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMap §e" + mapName + " §asuccessfully loaded and cached!");
+        }
+
+        cacheContainer.add(ArrayList.class, "MAPS", maps);
+
+        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMaps have been successfully loaded!");
+    }
+
+    private void loadArenas() {
+        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aLoading and caching arenas ...");
+
+        File arenaConfigFolder = new File(data.getArenaConfigPath());
+        ArrayList<String> arenas = new ArrayList<>();
+
+        for (File fileEntry : arenaConfigFolder.listFiles()) {
+            if(!fileEntry.isFile()) continue;
+
+        }
+
+        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aArenas have been successfully loaded!");
     }
 
     private void bStats() {
