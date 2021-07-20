@@ -24,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -188,7 +189,9 @@ public class GunGame extends JavaPlugin {
 
         File mapConfigFolder = new File(data.getMapConfigPath());
         try {
-            if(FolderUtils.isEmpty(Paths.get(mapConfigFolder.getPath()))) return;
+            if(FolderUtils.isEmpty(Paths.get(mapConfigFolder.getPath())) || !Files.exists(Paths.get(mapConfigFolder.getPath()))) {
+                ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cNo map configs found! Has an map already been created?");
+            }
         } catch (IOException exception) {
             ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aError while reading map configs!");
 
@@ -218,8 +221,12 @@ public class GunGame extends JavaPlugin {
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aLoading and caching arenas ...");
 
         File arenaConfigFolder = new File(data.getArenaConfigPath());
+
         try {
-            if(FolderUtils.isEmpty(Paths.get(arenaConfigFolder.getPath()))) return;
+            if(FolderUtils.isEmpty(Paths.get(arenaConfigFolder.getPath())) || !Files.exists(Paths.get(arenaConfigFolder.getPath()))) {
+                ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cNo arena configs found! Has an arena already been created?");
+                return;
+            }
         } catch (IOException exception) {
             ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aError while reading arena configs!");
 
