@@ -147,12 +147,7 @@ public class GunGameCMD implements CommandExecutor {
                     return true;
                 }
 
-                World world = Bukkit.getWorld(mapCreator.getMapName());
-                if(world == null) {
-                    player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cSomething went wrong. Was the world already unloaded?");
-                    return true;
-                }
-
+                World world = player.getWorld();
                 for(Player worldPlayers : world.getPlayers()) {
                     worldPlayers.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
                 }
