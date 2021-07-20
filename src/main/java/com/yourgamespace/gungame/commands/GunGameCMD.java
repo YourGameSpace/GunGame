@@ -132,7 +132,7 @@ public class GunGameCMD implements CommandExecutor {
 
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aSpawn-Location set!");
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§eThe map has now been successfully set up! You can now make your own settings in the world, such as Gamerules or Worldborder. The settings will be adopted.");
-                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §8Complete the map creation if you do not want to make any more changes. You will be kicked out of the world and the map config will be created! Use the command below:");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §7Complete the map creation if you do not want to make any more changes. You will be kicked out of the world and the map config will be created! Use the command below:");
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§2NEXT STEP: §7/gungame createMap finish");
                 return true;
             }
