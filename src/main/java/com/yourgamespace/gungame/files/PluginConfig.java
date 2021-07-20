@@ -10,7 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
-@SuppressWarnings("ResultOfMethodCallIgnored")
+@SuppressWarnings("ALL")
 public class PluginConfig {
 
     private final ConsoleCommandSender ccs = Bukkit.getConsoleSender();
