@@ -4,9 +4,9 @@ import com.yourgamespace.gungame.data.Data;
 import com.yourgamespace.gungame.data.MapCreatorData;
 import com.yourgamespace.gungame.files.MapConfig;
 import com.yourgamespace.gungame.main.GunGame;
+import com.yourgamespace.gungame.utils.FolderUtils;
 import com.yourgamespace.gungame.utils.MapCreator;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
-import com.yourgamespace.gungame.utils.WorldUtils;
 import de.tubeof.tubetils.api.cache.CacheContainer;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -155,7 +155,7 @@ public class GunGameCMD implements CommandExecutor {
                 Bukkit.unloadWorld(world, true);
 
                 try {
-                    WorldUtils.copyFolder(path, Paths.get(data.getMapStoragePath() + "/" + mapCreator.getMapName()), StandardCopyOption.REPLACE_EXISTING);
+                    FolderUtils.copyFolder(path, Paths.get(data.getMapStoragePath() + "/" + mapCreator.getMapName()), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException exception) {
                     player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cError while trying world to Map-Storage! Check the console for more details.");
 
