@@ -11,7 +11,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 
-@SuppressWarnings("unused")
 public class MapConfig {
 
     private final ConsoleCommandSender ccs = Bukkit.getConsoleSender();
