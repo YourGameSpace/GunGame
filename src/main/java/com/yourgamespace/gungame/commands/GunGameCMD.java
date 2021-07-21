@@ -94,6 +94,7 @@ public class GunGameCMD implements CommandExecutor {
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cAre you sure you want to create and set up a new map? If so, confirm this with the following command:");
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§c/gungame createMap start");
                 return true;
+            }
 
             int step = mapCreator.getCurrentStep();
             //STEP: Set Map Name
