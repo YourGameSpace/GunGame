@@ -75,8 +75,25 @@ public class GunGameCMD implements CommandExecutor {
 
         if(subCommand.equalsIgnoreCase("createMap")) {
             MapCreator mapCreator;
+
             if(MapCreatorData.isPlayerInMapCreation(player)) mapCreator = MapCreatorData.getMapCreator(player);
-            else mapCreator = new MapCreator(player); MapCreatorData.addMapCreator(player, mapCreator);
+            else {
+                if(args.length == 2) {
+                    String confirmStart = args[1];
+                    if(confirmStart.contentEquals("start")) {
+                        mapCreator = new MapCreator(player);
+                        MapCreatorData.addMapCreator(player, mapCreator);
+                        
+                        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aMap-Cration started!");
+                        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§l§2NEXT STEP: §f§7You must define a map name. Set the map name with the command below:");
+                        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§l§2NEXT STEP: §f§7/gungame createMap <Mapname>");
+                        return true;
+                    }
+                }
+
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cAre you sure you want to create and set up a new map? If so, confirm this with the following command:");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§c/gungame createMap start");
+                return true;
 
             int step = mapCreator.getCurrentStep();
             //STEP: Set Map Name
