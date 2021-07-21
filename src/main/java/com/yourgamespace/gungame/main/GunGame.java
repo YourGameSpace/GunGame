@@ -9,6 +9,7 @@ import com.yourgamespace.gungame.listener.CancelEvents;
 import com.yourgamespace.gungame.listener.CreatorCancelEvents;
 import com.yourgamespace.gungame.listener.PlayerDeath;
 import com.yourgamespace.gungame.listener.WaterKill;
+import com.yourgamespace.gungame.manager.MapManager;
 import com.yourgamespace.gungame.utils.FolderUtils;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
 import de.tubeof.tubetils.api.cache.CacheContainer;
@@ -16,6 +17,7 @@ import de.tubeof.tubetils.api.updatechecker.UpdateChecker;
 import de.tubeof.tubetils.api.updatechecker.enums.ApiMethode;
 import de.tubeof.tubetilsmanager.TubeTilsManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -202,19 +204,29 @@ public class GunGame extends JavaPlugin {
             return;
         }
 
-        ArrayList<String> maps = new ArrayList<>();
+        ArrayList<MapManager> maps = new ArrayList<>();
 
         for (File fileEntry : mapConfigFolder.listFiles()) {
             if(!fileEntry.isFile()) continue;
 
             FileConfiguration cfg = YamlConfiguration.loadConfiguration(fileEntry);
-            String mapName = cfg.getString("MapName");
 
-            maps.add(mapName);
+            String mapName = cfg.getString("MapName");
+            int spawnLocationRadius = cfg.getInt("SpawnProtectionRadius");
+
+            Double x = cfg.getDouble("Spawn.x");
+            Double y = cfg.getDouble("Spawn.y");
+            Double z = cfg.getDouble("Spawn.z");
+            Float yaw = Float.valueOf(cfg.getString("Spawn.yaw"));
+            Float pitch = Float.valueOf(cfg.getString("Spawn.pitch"));
+            Location spawnLocation = new Location(null, x, y, z, yaw, pitch);
+
+            maps.add(new MapManager(mapName, spawnLocation, spawnLocationRadius));
+
             ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMap §e" + mapName + " §asuccessfully loaded and cached!");
         }
 
-        cacheContainer.add(ArrayList.class, "MAPS", maps);
+        cacheContainer.add(ArrayList.class, "MAP_MANAGERS", maps);
 
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMaps have been successfully loaded!");
     }
