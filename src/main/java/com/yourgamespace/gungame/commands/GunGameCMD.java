@@ -129,6 +129,12 @@ public class GunGameCMD implements CommandExecutor {
                 }
 
                 String mapName = args[1];
+
+                if(mapCache.isMapExists(mapName)) {
+                    player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cThere is already a map with this name!");
+                    return true;
+                }
+
                 mapCreator.setMapName(mapName);
                 mapCreator.addStep();
 
