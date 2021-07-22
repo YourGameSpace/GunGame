@@ -1,9 +1,12 @@
 package com.yourgamespace.gungame.commands;
 
+import com.yourgamespace.gungame.data.ArenaCache;
 import com.yourgamespace.gungame.data.Data;
 import com.yourgamespace.gungame.data.MapCache;
+import com.yourgamespace.gungame.files.ArenaConfig;
 import com.yourgamespace.gungame.files.MapConfig;
 import com.yourgamespace.gungame.main.GunGame;
+import com.yourgamespace.gungame.utils.ArenaCreator;
 import com.yourgamespace.gungame.utils.FolderUtils;
 import com.yourgamespace.gungame.utils.MapCreator;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
@@ -18,6 +21,7 @@ import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.Collections;
 import java.util.Objects;
 
 @SuppressWarnings({"NullableProblems", "unused"})
@@ -27,6 +31,8 @@ public class GunGameCMD implements CommandExecutor {
     private final CacheContainer cacheContainer = GunGame.getCacheContainer();
     private final MapCache mapCache = GunGame.getMapCache();
     private final MapCreator.Data mapCreatorData = GunGame.getMapCreatorData();
+    private final ArenaCache arenaCache = GunGame.getArenaCache();
+    private final ArenaCreator.Data arenaCreatorData = GunGame.getArenaCreatorData();
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
@@ -99,6 +105,7 @@ public class GunGameCMD implements CommandExecutor {
 
             MapCreator.Creator mapCreator;
 
+            //STEP: Confirm Start
             if(mapCreatorData.isPlayerInCreation(player)) mapCreator = mapCreatorData.getCreator(player);
             else {
                 if(args.length == 2) {
@@ -213,6 +220,101 @@ public class GunGameCMD implements CommandExecutor {
 
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aMap creation successfully completed! You can now create arenas and assign this map to it with the following command:");
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§e/gungame createArena");
+                return true;
+            }
+
+            return true;
+        }
+
+        if(subCommand.equalsIgnoreCase("createArena")) {
+            if(!player.hasPermission("gungame.command.createarena")) {
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "ERROR_NO_PERMISSIONS")));
+                return true;
+            }
+
+            ArenaCreator.Creator arenaCreator;
+
+            //STEP: Confirm Start
+            if(arenaCreatorData.isPlayerInCreation(player)) arenaCreator = arenaCreatorData.getCreator(player);
+            else {
+                if(args.length == 2) {
+                    String confirmStart = args[1];
+                    if(confirmStart.contentEquals("start")) {
+                        arenaCreator = new ArenaCreator.Creator(player);
+                        arenaCreatorData.addCreator(player, arenaCreator);
+
+                        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aArena-Cration started!");
+                        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§l§2NEXT STEP: §f§7You must define a arena name. Set the arena name with the command below:");
+                        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§l§2NEXT STEP: §f§7/gungame createArena <Arena-Name>");
+                        return true;
+                    }
+                }
+
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cAre you sure you want to create and set up a new arena? If so, confirm this with the following command:");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§c/gungame createArena start");
+                return true;
+            }
+
+            int step = arenaCreator.getCurrentStep();
+            //STEP: Set Arena Name
+            if(step == 1) {
+                if(args.length != 2) {
+                    player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§c/gungame createArena <Arena-Name>");
+                    return true;
+                }
+
+                String arenaName = args[1];
+
+                if(arenaCache.isArenaExists(arenaName)) {
+                    player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cThere is already a arena with this name!");
+                    return true;
+                }
+
+                arenaCreator.setArenaName(arenaName);
+                arenaCreator.addStep();
+
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aArena-Name was set to §e" + arenaName + "§a!");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§l§2NEXT STEP: §f§7Set the map with which the arena is to be created. You can list all available maps with §e/gungame listMaps§7.");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§l§2NEXT STEP: §f§7/gungame createArena <Map>");
+
+                return true;
+            }
+            //STEP: Set Arena Map
+            if(step == 2) {
+                if(args.length != 2) {
+                    player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§c/gungame createArena <Map>");
+                    return true;
+                }
+
+                String arenaMap = args[1];
+                if(!mapCache.isMapExists(arenaMap)) {
+                    player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§cThis map does not exist! Use §e/gungame listMaps §cto list all available maps.");
+                    return true;
+                }
+
+                arenaCreator.setArenaName(arenaMap);
+                arenaCreator.addStep();
+
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aArena-Map was set to §e" + arenaMap + "§a!");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§l§2NEXT STEP: §f§7Arena setup completed! To create the arena, execute the following command:");
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§l§2NEXT STEP: §f§7/gungame createArena finish");
+                return true;
+            }
+            //STEP: Finish
+            if(step == 3) {
+                if(args.length != 2) {
+                    player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§c/gungame createArena finish");
+                    return true;
+                }
+                arenaCreatorData.removeCreator(player);
+
+                int highestArenaId = Collections.max(arenaCache.getArenaIds().keySet());
+                int arenaId = (highestArenaId + 1);
+
+                ArenaConfig arenaConfig = new ArenaConfig(arenaCreator.getArenaName());
+                arenaConfig.createArenaConfig(arenaCreator.getArenaMap(), arenaId);
+
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aArena creation successfully completed! Arena-ID is §e" + arenaId + "§a.");
                 return true;
             }
 

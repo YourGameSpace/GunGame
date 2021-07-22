@@ -34,7 +34,7 @@ public class ArenaCreator {
         private int step = 1;
 
         private String arenaName;
-        private String mapName;
+        private String arenaMap;
 
         public Creator(Player player) {
             this.ownerUuid = player.getUniqueId();
@@ -65,12 +65,12 @@ public class ArenaCreator {
             return arenaName;
         }
 
-        public void setMapName(String mapName) {
-            this.mapName = mapName;
+        public void setArenaMap(String arenaMap) {
+            this.arenaMap = arenaMap;
         }
 
-        public String getMapName() {
-            return mapName;
+        public String getArenaMap() {
+            return arenaMap;
         }
     }
 
