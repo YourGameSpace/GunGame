@@ -6,6 +6,7 @@ import com.yourgamespace.gungame.data.MapCache;
 import com.yourgamespace.gungame.files.ArenaConfig;
 import com.yourgamespace.gungame.files.MapConfig;
 import com.yourgamespace.gungame.main.GunGame;
+import com.yourgamespace.gungame.manager.ArenaManager;
 import com.yourgamespace.gungame.utils.ArenaCreator;
 import com.yourgamespace.gungame.utils.FolderUtils;
 import com.yourgamespace.gungame.utils.MapCreator;
@@ -314,6 +315,8 @@ public class GunGameCMD implements CommandExecutor {
 
                 ArenaConfig arenaConfig = new ArenaConfig(arenaCreator.getArenaName());
                 arenaConfig.createArenaConfig(arenaCreator.getArenaMap(), arenaId);
+
+                arenaCache.addArena(arenaCreator.getArenaName(), new ArenaManager(arenaId, arenaCreator.getArenaName(), mapCache.getMap(arenaCreator.getArenaMap()), 5));
 
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aArena creation successfully completed! Arena-ID is §e" + arenaId + "§a.");
                 return true;
