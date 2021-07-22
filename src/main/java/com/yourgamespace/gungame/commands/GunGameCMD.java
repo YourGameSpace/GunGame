@@ -4,7 +4,6 @@ import com.yourgamespace.gungame.data.Data;
 import com.yourgamespace.gungame.data.MapCache;
 import com.yourgamespace.gungame.files.MapConfig;
 import com.yourgamespace.gungame.main.GunGame;
-import com.yourgamespace.gungame.manager.MapManager;
 import com.yourgamespace.gungame.utils.FolderUtils;
 import com.yourgamespace.gungame.utils.MapCreator;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
