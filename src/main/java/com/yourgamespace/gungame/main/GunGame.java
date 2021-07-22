@@ -271,6 +271,10 @@ public class GunGame extends JavaPlugin {
             String arenaMap = cfg.getString("ArenaMap");
             int arenaId = cfg.getInt("ArenaId");
 
+            for(String map : mapCache.getMaps().keySet()) {
+                ccs.sendMessage(map);
+            }
+
             if(!mapCache.isMapExists(arenaMap)) {
                 ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cError while trying to enable arena §e" + arenaName + " §cwith ID §e" + arenaId + "§c: The set map does not exist!");
                 pluginManager.disablePlugin(getInstance());
