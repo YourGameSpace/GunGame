@@ -141,6 +141,8 @@ public class GunGame extends JavaPlugin {
 
         mapCache = new MapCache();
         mapCreatorData = new MapCreator.Data();
+        arenaCache = new ArenaCache();
+        arenaCreatorData = new ArenaCreator.Data();
 
         //ProtocolLib
         if(Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
