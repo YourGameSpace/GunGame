@@ -10,3 +10,5 @@ softdepend:
 commands:
   gungame:
     usage: </command>
+    aliases:
+      - gg
