@@ -4,6 +4,7 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.yourgamespace.gungame.commands.GunGameCMD;
 import com.yourgamespace.gungame.data.Data;
+import com.yourgamespace.gungame.data.MapCache;
 import com.yourgamespace.gungame.files.PluginConfig;
 import com.yourgamespace.gungame.listener.CancelEvents;
 import com.yourgamespace.gungame.listener.CreatorCancelEvents;
@@ -46,6 +47,7 @@ public class GunGame extends JavaPlugin {
     private static Data data;
     private static PluginConfig pluginConfig;
 
+    public static MapCache mapCache;
     private static MapCreator.Data mapCreatorData;
 
     @Override
@@ -132,6 +134,7 @@ public class GunGame extends JavaPlugin {
         data = new Data();
         pluginConfig = new PluginConfig();
 
+        mapCache = new MapCache();
         mapCreatorData = new MapCreator.Data();
 
         //ProtocolLib
@@ -209,8 +212,6 @@ public class GunGame extends JavaPlugin {
             return;
         }
 
-        ArrayList<MapManager> maps = new ArrayList<>();
-
         for (File fileEntry : mapConfigFolder.listFiles()) {
             if(!fileEntry.isFile()) continue;
 
@@ -226,12 +227,10 @@ public class GunGame extends JavaPlugin {
             Float pitch = Float.valueOf(cfg.getString("Spawn.pitch"));
             Location spawnLocation = new Location(null, x, y, z, yaw, pitch);
 
-            maps.add(new MapManager(mapName, spawnLocation, spawnLocationRadius));
+            getMapCache().addMap(mapName, new MapManager(mapName, spawnLocation, spawnLocationRadius));
 
             ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMap §e" + mapName + " §asuccessfully loaded and cached!");
         }
-
-        cacheContainer.add(ArrayList.class, "MAP_MANAGERS", maps);
 
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMaps have been successfully loaded!");
     }
@@ -290,6 +289,10 @@ public class GunGame extends JavaPlugin {
 
     public static CacheContainer getCacheContainer() {
         return cacheContainer;
+    }
+
+    public static MapCache getMapCache() {
+        return mapCache;
     }
 
     public static MapCreator.Data getMapCreatorData() {

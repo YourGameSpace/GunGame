@@ -1,8 +1,10 @@
 package com.yourgamespace.gungame.commands;
 
 import com.yourgamespace.gungame.data.Data;
+import com.yourgamespace.gungame.data.MapCache;
 import com.yourgamespace.gungame.files.MapConfig;
 import com.yourgamespace.gungame.main.GunGame;
+import com.yourgamespace.gungame.manager.MapManager;
 import com.yourgamespace.gungame.utils.FolderUtils;
 import com.yourgamespace.gungame.utils.MapCreator;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
@@ -24,6 +26,7 @@ public class GunGameCMD implements CommandExecutor {
 
     private final Data data = GunGame.getData();
     private final CacheContainer cacheContainer = GunGame.getCacheContainer();
+    private final MapCache mapCache = GunGame.getMapCache();
     private final MapCreator.Data mapCreatorData = GunGame.getMapCreatorData();
 
     @Override
@@ -39,7 +42,23 @@ public class GunGameCMD implements CommandExecutor {
         }
         String subCommand = args[0];
 
+        if(subCommand.equalsIgnoreCase("listMaps")) {
+            if(!player.hasPermission("gungame.command.listmaps")) {
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "ERROR_NO_PERMISSIONS")));
+                return true;
+            }
+
+            player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aAvailable Maps:");
+            for(String map : mapCache.getMaps().keySet()) {
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§7> §e" + map);
+            }
+        }
+
         if(subCommand.equalsIgnoreCase("loadWorld")) {
+            if(!player.hasPermission("gungame.command.loadworld")) {
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "ERROR_NO_PERMISSIONS")));
+                return true;
+            }
             if(args.length != 2) {
                 player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§c/gungame loadWorld <World>");
                 return true;
@@ -74,6 +93,11 @@ public class GunGameCMD implements CommandExecutor {
         }
 
         if(subCommand.equalsIgnoreCase("createMap")) {
+            if(!player.hasPermission("gungame.command.createmap")) {
+                player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "ERROR_NO_PERMISSIONS")));
+                return true;
+            }
+
             MapCreator.Creator mapCreator;
 
             if(mapCreatorData.isPlayerInCreation(player)) mapCreator = mapCreatorData.getCreator(player);
@@ -195,14 +219,9 @@ public class GunGameCMD implements CommandExecutor {
 
     private void sendUsageMessage(Player player) {
         player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§7--- §cGunGame Commands Overview §7---");
+        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§7> §c/gungame listMaps");
         player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§7> §c/gungame loadWorld <World>");
         player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§7> §c/gungame createMap");
-        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "");
-        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "");
-        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "");
-        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "");
-        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "");
-        player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "");
         player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "");
     }
 }
