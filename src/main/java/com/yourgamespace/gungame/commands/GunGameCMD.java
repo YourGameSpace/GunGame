@@ -308,7 +308,8 @@ public class GunGameCMD implements CommandExecutor {
                 }
                 arenaCreatorData.removeCreator(player);
 
-                int highestArenaId = Collections.max(arenaCache.getArenaIds().keySet());
+                int highestArenaId = 0;
+                if(!arenaCache.getArenaIds().isEmpty()) Collections.max(arenaCache.getArenaIds().keySet());
                 int arenaId = (highestArenaId + 1);
 
                 ArenaConfig arenaConfig = new ArenaConfig(arenaCreator.getArenaName());
