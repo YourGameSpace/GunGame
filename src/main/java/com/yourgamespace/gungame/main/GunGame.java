@@ -11,6 +11,7 @@ import com.yourgamespace.gungame.listener.CancelEvents;
 import com.yourgamespace.gungame.listener.CreatorCancelEvents;
 import com.yourgamespace.gungame.listener.PlayerDeath;
 import com.yourgamespace.gungame.listener.WaterKill;
+import com.yourgamespace.gungame.manager.ArenaManager;
 import com.yourgamespace.gungame.manager.MapManager;
 import com.yourgamespace.gungame.utils.ArenaCreator;
 import com.yourgamespace.gungame.utils.FolderUtils;
@@ -250,7 +251,7 @@ public class GunGame extends JavaPlugin {
                 return;
             }
         } catch (IOException exception) {
-            ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aError while reading arena configs!");
+            ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cError while reading arena configs!");
 
             exception.printStackTrace();
             pluginManager.disablePlugin(getInstance());
@@ -261,6 +262,20 @@ public class GunGame extends JavaPlugin {
 
         for (File fileEntry : arenaConfigFolder.listFiles()) {
             if(!fileEntry.isFile()) continue;
+
+            FileConfiguration cfg = YamlConfiguration.loadConfiguration(fileEntry);
+
+            String arenaName = cfg.getString("ArenaName");
+            String arenaMap = cfg.getString("ArenaMap");
+            int arenaId = cfg.getInt("ArenaId");
+
+            if(!mapCache.isMapExists(arenaMap)) {
+                ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cError while trying to enable arena §e" + arenaName + " §cwith ID §e" + arenaId + " §c: The set map does not exist!");
+                pluginManager.disablePlugin(getInstance());
+                return;
+            }
+
+            getArenaCache().addArena(arenaName, new ArenaManager(arenaId, arenaName, mapCache.getMap(arenaMap), 5));
 
         }
 

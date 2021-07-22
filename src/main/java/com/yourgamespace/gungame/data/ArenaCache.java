@@ -4,6 +4,7 @@ import com.yourgamespace.gungame.manager.ArenaManager;
 
 import java.util.HashMap;
 
+@SuppressWarnings("ALL")
 public class ArenaCache {
 
     public ArenaCache() {}
@@ -11,24 +12,24 @@ public class ArenaCache {
     private final HashMap<String, ArenaManager> arenas = new HashMap<>();
     private final HashMap<Integer, String> arenaIds = new HashMap<>();
 
-    public void addArena(String mapName, ArenaManager arenaManager) {
-        arenas.put(mapName, arenaManager);
+    public void addArena(String arenaName, ArenaManager arenaManager) {
+        arenas.put(arenaName, arenaManager);
     }
 
-    public void removeArena(String mapName) {
-        arenas.remove(mapName);
+    public void removeArena(String arenaName) {
+        arenas.remove(arenaName);
     }
 
-    public ArenaManager getArena(String mapName) {
-        return arenas.getOrDefault(mapName, null);
+    public ArenaManager getArena(String arenaName) {
+        return arenas.getOrDefault(arenaName, null);
     }
 
     public ArenaManager getArenaFromId(int arenaId) {
         return arenas.getOrDefault(arenaIds.get(arenaId), null);
     }
 
-    public boolean isArenaExists(String mapName) {
-        return arenas.containsKey(mapName);
+    public boolean isArenaExists(String arenaName) {
+        return arenas.containsKey(arenaName);
     }
 
     public boolean isArenaIdExists(int arenaId) {
@@ -39,7 +40,7 @@ public class ArenaCache {
         return arenas;
     }
 
-    public HashMap<Integer, ArenaManager> getArenaIds() {
+    public HashMap<Integer, String> getArenaIds() {
         return arenaIds;
     }
 }
