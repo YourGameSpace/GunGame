@@ -2,53 +2,76 @@ package com.yourgamespace.gungame.utils;
 
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 @SuppressWarnings("unused")
 public class ArenaCreator {
 
-    private final UUID ownerUuid;
-    private final String ownerName;
-    private int step = 1;
+    public static class Data {
+        private final HashMap<UUID, Creator> creators = new HashMap<>();
 
-    private String arenaName;
-    private String mapName;
+        public void addCreator(Player player, Creator creator) {
+            creators.put(player.getUniqueId(), creator);
+        }
 
-    public ArenaCreator(Player player) {
-        this.ownerUuid = player.getUniqueId();
-        this.ownerName = player.getName();
+        public void removeCreator(Player player) {
+            creators.remove(player.getUniqueId());
+        }
+
+        public Creator getCreator(Player player) {
+            return creators.get(player.getUniqueId());
+        }
+
+        public boolean isPlayerInCreation(Player player) {
+            return creators.containsKey(player.getUniqueId());
+        }
     }
 
-    public int getCurrentStep() {
-        return step;
-    }
+    public static class Creator {
+        private final UUID ownerUuid;
+        private final String ownerName;
+        private int step = 1;
 
-    public void addStep() {
-        step++;
-    }
+        private String arenaName;
+        private String mapName;
 
-    public UUID getOwnerUuid() {
-        return ownerUuid;
-    }
+        public Creator(Player player) {
+            this.ownerUuid = player.getUniqueId();
+            this.ownerName = player.getName();
+        }
 
-    public String getOwnerName() {
-        return ownerName;
-    }
+        public int getCurrentStep() {
+            return step;
+        }
 
-    public void setArenaName(String arenaName) {
-        this.arenaName = arenaName;
-    }
+        public void addStep() {
+            step++;
+        }
 
-    public String getArenaName() {
-        return arenaName;
-    }
+        public UUID getOwnerUuid() {
+            return ownerUuid;
+        }
 
-    public void setMapName(String mapName) {
-        this.mapName = mapName;
-    }
+        public String getOwnerName() {
+            return ownerName;
+        }
 
-    public String getMapName() {
-        return mapName;
+        public void setArenaName(String arenaName) {
+            this.arenaName = arenaName;
+        }
+
+        public String getArenaName() {
+            return arenaName;
+        }
+
+        public void setMapName(String mapName) {
+            this.mapName = mapName;
+        }
+
+        public String getMapName() {
+            return mapName;
+        }
     }
 
 }

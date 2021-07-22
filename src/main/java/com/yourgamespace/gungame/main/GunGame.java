@@ -3,6 +3,7 @@ package com.yourgamespace.gungame.main;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.yourgamespace.gungame.commands.GunGameCMD;
+import com.yourgamespace.gungame.data.ArenaCache;
 import com.yourgamespace.gungame.data.Data;
 import com.yourgamespace.gungame.data.MapCache;
 import com.yourgamespace.gungame.files.PluginConfig;
@@ -11,6 +12,7 @@ import com.yourgamespace.gungame.listener.CreatorCancelEvents;
 import com.yourgamespace.gungame.listener.PlayerDeath;
 import com.yourgamespace.gungame.listener.WaterKill;
 import com.yourgamespace.gungame.manager.MapManager;
+import com.yourgamespace.gungame.utils.ArenaCreator;
 import com.yourgamespace.gungame.utils.FolderUtils;
 import com.yourgamespace.gungame.utils.MapCreator;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
@@ -49,6 +51,8 @@ public class GunGame extends JavaPlugin {
 
     public static MapCache mapCache;
     private static MapCreator.Data mapCreatorData;
+    public static ArenaCache arenaCache;
+    private static ArenaCreator.Data arenaCreatorData;
 
     @Override
     public void onEnable() {
@@ -297,6 +301,14 @@ public class GunGame extends JavaPlugin {
 
     public static MapCreator.Data getMapCreatorData() {
         return mapCreatorData;
+    }
+
+    public static ArenaCache getArenaCache() {
+        return arenaCache;
+    }
+
+    public static ArenaCreator.Data getArenaCreatorData() {
+        return arenaCreatorData;
     }
 
     public static GunGame getInstance() {
