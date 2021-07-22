@@ -204,40 +204,45 @@ public class GunGame extends JavaPlugin {
     }
 
     private void loadMaps() {
-        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aLoading and caching maps ...");
+        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aLoading and caching maps with delay of 20 ticks ...");
 
-        File mapConfigFolder = new File(data.getMapConfigPath());
-        try {
-            if(FolderUtils.isEmpty(Paths.get(mapConfigFolder.getPath())) || !Files.exists(Paths.get(mapConfigFolder.getPath()))) {
-                ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cNo map configs found! Has an map already been created?");
+        Bukkit.getScheduler().runTaskLater(getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                File mapConfigFolder = new File(data.getMapConfigPath());
+                try {
+                    if(FolderUtils.isEmpty(Paths.get(mapConfigFolder.getPath())) || !Files.exists(Paths.get(mapConfigFolder.getPath()))) {
+                        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cNo map configs found! Has an map already been created?");
+                    }
+                } catch (IOException exception) {
+                    ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aError while reading map configs!");
+
+                    exception.printStackTrace();
+                    pluginManager.disablePlugin(getInstance());
+                    return;
+                }
+
+                for (File fileEntry : mapConfigFolder.listFiles()) {
+                    if(!fileEntry.isFile()) continue;
+
+                    FileConfiguration cfg = YamlConfiguration.loadConfiguration(fileEntry);
+
+                    String mapName = cfg.getString("MapName");
+                    int spawnLocationRadius = cfg.getInt("SpawnProtectionRadius");
+
+                    Double x = cfg.getDouble("Spawn.x");
+                    Double y = cfg.getDouble("Spawn.y");
+                    Double z = cfg.getDouble("Spawn.z");
+                    Float yaw = Float.valueOf(cfg.getString("Spawn.yaw"));
+                    Float pitch = Float.valueOf(cfg.getString("Spawn.pitch"));
+                    Location spawnLocation = new Location(null, x, y, z, yaw, pitch);
+
+                    getMapCache().addMap(mapName, new MapManager(mapName, spawnLocation, spawnLocationRadius));
+
+                    ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMap §e" + mapName + " §asuccessfully loaded and cached!");
+                }
             }
-        } catch (IOException exception) {
-            ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aError while reading map configs!");
-
-            exception.printStackTrace();
-            pluginManager.disablePlugin(getInstance());
-            return;
-        }
-
-        for (File fileEntry : mapConfigFolder.listFiles()) {
-            if(!fileEntry.isFile()) continue;
-
-            FileConfiguration cfg = YamlConfiguration.loadConfiguration(fileEntry);
-
-            String mapName = cfg.getString("MapName");
-            int spawnLocationRadius = cfg.getInt("SpawnProtectionRadius");
-
-            Double x = cfg.getDouble("Spawn.x");
-            Double y = cfg.getDouble("Spawn.y");
-            Double z = cfg.getDouble("Spawn.z");
-            Float yaw = Float.valueOf(cfg.getString("Spawn.yaw"));
-            Float pitch = Float.valueOf(cfg.getString("Spawn.pitch"));
-            Location spawnLocation = new Location(null, x, y, z, yaw, pitch);
-
-            getMapCache().addMap(mapName, new MapManager(mapName, spawnLocation, spawnLocationRadius));
-
-            ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMap §e" + mapName + " §asuccessfully loaded and cached!");
-        }
+        }, 20);
 
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMaps have been successfully loaded!");
     }
