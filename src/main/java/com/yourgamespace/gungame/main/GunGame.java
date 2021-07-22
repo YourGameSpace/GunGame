@@ -245,46 +245,41 @@ public class GunGame extends JavaPlugin {
     private void loadArenas() {
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aLoading and caching arenas with a delay for 20 ticks...");
 
-        Bukkit.getScheduler().runTaskLater(getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                File arenaConfigFolder = new File(data.getArenaConfigPath());
+        File arenaConfigFolder = new File(data.getArenaConfigPath());
 
-                try {
-                    if(FolderUtils.isEmpty(Paths.get(arenaConfigFolder.getPath())) || !Files.exists(Paths.get(arenaConfigFolder.getPath()))) {
-                        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cNo arena configs found! Has an arena already been created?");
-                        return;
-                    }
-                } catch (IOException exception) {
-                    ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cError while reading arena configs!");
-
-                    exception.printStackTrace();
-                    pluginManager.disablePlugin(getInstance());
-                    return;
-                }
-
-                ArrayList<String> arenas = new ArrayList<>();
-
-                for (File fileEntry : arenaConfigFolder.listFiles()) {
-                    if(!fileEntry.isFile()) continue;
-
-                    FileConfiguration cfg = YamlConfiguration.loadConfiguration(fileEntry);
-
-                    String arenaName = cfg.getString("ArenaName");
-                    String arenaMap = cfg.getString("ArenaMap");
-                    int arenaId = cfg.getInt("ArenaId");
-
-                    if(!mapCache.isMapExists(arenaMap)) {
-                        ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cError while trying to enable arena §e" + arenaName + " §cwith ID §e" + arenaId + "§c: The set map does not exist!");
-                        pluginManager.disablePlugin(getInstance());
-                        return;
-                    }
-
-                    getArenaCache().addArena(arenaName, new ArenaManager(arenaId, arenaName, mapCache.getMap(arenaMap), 5));
-
-                }
+        try {
+            if(FolderUtils.isEmpty(Paths.get(arenaConfigFolder.getPath())) || !Files.exists(Paths.get(arenaConfigFolder.getPath()))) {
+                ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cNo arena configs found! Has an arena already been created?");
+                return;
             }
-        }, 20);
+        } catch (IOException exception) {
+            ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cError while reading arena configs!");
+
+            exception.printStackTrace();
+            pluginManager.disablePlugin(getInstance());
+            return;
+        }
+
+        ArrayList<String> arenas = new ArrayList<>();
+
+        for (File fileEntry : arenaConfigFolder.listFiles()) {
+            if(!fileEntry.isFile()) continue;
+
+            FileConfiguration cfg = YamlConfiguration.loadConfiguration(fileEntry);
+
+            String arenaName = cfg.getString("ArenaName");
+            String arenaMap = cfg.getString("ArenaMap");
+            int arenaId = cfg.getInt("ArenaId");
+
+            if(!mapCache.isMapExists(arenaMap)) {
+                ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§cError while trying to enable arena §e" + arenaName + " §cwith ID §e" + arenaId + "§c: The set map does not exist!");
+                pluginManager.disablePlugin(getInstance());
+                return;
+            }
+
+            getArenaCache().addArena(arenaName, new ArenaManager(arenaId, arenaName, mapCache.getMap(arenaMap), 5));
+
+        }
 
         ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aArenas have been successfully loaded!");
     }
