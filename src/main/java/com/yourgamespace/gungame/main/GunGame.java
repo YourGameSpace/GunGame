@@ -11,6 +11,7 @@ import com.yourgamespace.gungame.listener.PlayerDeath;
 import com.yourgamespace.gungame.listener.WaterKill;
 import com.yourgamespace.gungame.manager.MapManager;
 import com.yourgamespace.gungame.utils.FolderUtils;
+import com.yourgamespace.gungame.utils.MapCreator;
 import com.yourgamespace.gungame.utils.ObjectTransformer;
 import de.tubeof.tubetils.api.cache.CacheContainer;
 import de.tubeof.tubetils.api.updatechecker.UpdateChecker;
@@ -44,6 +45,8 @@ public class GunGame extends JavaPlugin {
     private static UpdateChecker updateChecker;
     private static Data data;
     private static PluginConfig pluginConfig;
+
+    private static MapCreator.Data mapCreatorData;
 
     @Override
     public void onEnable() {
@@ -128,6 +131,8 @@ public class GunGame extends JavaPlugin {
 
         data = new Data();
         pluginConfig = new PluginConfig();
+
+        mapCreatorData = new MapCreator.Data();
 
         //ProtocolLib
         if(Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
@@ -285,6 +290,10 @@ public class GunGame extends JavaPlugin {
 
     public static CacheContainer getCacheContainer() {
         return cacheContainer;
+    }
+
+    public static MapCreator.Data getMapCreatorData() {
+        return mapCreatorData;
     }
 
     public static GunGame getInstance() {

@@ -1,7 +1,6 @@
 package com.yourgamespace.gungame.commands;
 
 import com.yourgamespace.gungame.data.Data;
-import com.yourgamespace.gungame.data.MapCreatorData;
 import com.yourgamespace.gungame.files.MapConfig;
 import com.yourgamespace.gungame.main.GunGame;
 import com.yourgamespace.gungame.utils.FolderUtils;
@@ -25,6 +24,7 @@ public class GunGameCMD implements CommandExecutor {
 
     private final Data data = GunGame.getData();
     private final CacheContainer cacheContainer = GunGame.getCacheContainer();
+    private final MapCreator.Data mapCreatorData = GunGame.getMapCreatorData();
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
@@ -74,15 +74,15 @@ public class GunGameCMD implements CommandExecutor {
         }
 
         if(subCommand.equalsIgnoreCase("createMap")) {
-            MapCreator mapCreator;
+            MapCreator.Creator mapCreator;
 
-            if(MapCreatorData.isPlayerInMapCreation(player)) mapCreator = MapCreatorData.getMapCreator(player);
+            if(mapCreatorData.isPlayerInCreation(player)) mapCreator = mapCreatorData.getCreator(player);
             else {
                 if(args.length == 2) {
                     String confirmStart = args[1];
                     if(confirmStart.contentEquals("start")) {
-                        mapCreator = new MapCreator(player);
-                        MapCreatorData.addMapCreator(player, mapCreator);
+                        mapCreator = new MapCreator.Creator(player);
+                        mapCreatorData.addCreator(player, mapCreator);
                         
                         player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§aMap-Cration started!");
                         player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§l§2NEXT STEP: §f§7You must define a map name. Set the map name with the command below:");
@@ -160,7 +160,7 @@ public class GunGameCMD implements CommandExecutor {
                     player.sendMessage(ObjectTransformer.getString(cacheContainer.get(String.class, "PREFIX")) + "§c/gungame createMap finish");
                     return true;
                 }
-                MapCreatorData.removeMapCreator(player);
+                mapCreatorData.removeCreator(player);
 
                 World world = player.getWorld();
                 Path path = Paths.get(world.getWorldFolder().getPath());
