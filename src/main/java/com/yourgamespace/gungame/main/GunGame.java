@@ -234,7 +234,7 @@ public class GunGame extends JavaPlugin {
             Float pitch = Float.valueOf(cfg.getString("Spawn.pitch"));
             Location spawnLocation = new Location(null, x, y, z, yaw, pitch);
 
-            getMapCache().addMap(mapName, new MapManager(mapName, spawnLocation, spawnLocationRadius));
+            mapCache.addMap(mapName, new MapManager(mapName, spawnLocation, spawnLocationRadius));
 
             ccs.sendMessage(cacheContainer.get(String.class, "STARTUP_PREFIX") + "§aMap §e" + mapName + " §asuccessfully loaded and cached!");
         }
@@ -277,7 +277,7 @@ public class GunGame extends JavaPlugin {
                 return;
             }
 
-            getArenaCache().addArena(arenaName, new ArenaManager(arenaId, arenaName, mapCache.getMap(arenaMap), 5));
+            arenaCache.addArena(arenaName, new ArenaManager(arenaId, arenaName, mapCache.getMap(arenaMap), 5));
 
         }
 
