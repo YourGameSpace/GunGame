@@ -81,8 +81,8 @@
 
     <repositories>
         <repository>
-            <id>repo.yourgamespace</id>
-            <url>https://hub.yourgamespace.com/repo/</url>
+            <id>nexus.yourgamespace</id>
+            <url>https://hub.yourgamespace.com/nexus/repository/public/</url>
         </repository>
         <repository>
             <id>dmulloy2-repo</id>
@@ -93,7 +93,7 @@
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
+            <artifactId>spigot-api</artifactId>
             <version>1.14.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
@@ -113,13 +113,13 @@
         <dependency>
             <groupId>de.tubeof</groupId>
             <artifactId>TubeTils</artifactId>
-            <version>SNAPSHOT-48</version>
+            <version>SNAPSHOT-60</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.tubeof</groupId>
             <artifactId>TubeTilsManager</artifactId>
-            <version>SNAPSHOT-2</version>
+            <version>SNAPSHOT-16</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>

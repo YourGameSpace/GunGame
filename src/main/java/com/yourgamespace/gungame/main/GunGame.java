@@ -128,7 +128,7 @@ public class GunGame extends JavaPlugin {
     private void initialisation() {
         main = this;
 
-        tubeTilsManager = new TubeTilsManager("§7[§cGunGameLogger§7] ", this, "SNAPSHOT-48", "1.0.2", true);
+        tubeTilsManager = new TubeTilsManager("§7[§cGunGameLogger§7] ", this, 60, true);
         cacheContainer = new CacheContainer("GunGame");
         cacheContainer.registerCacheType(String.class);
         cacheContainer.registerCacheType(Boolean.class);
